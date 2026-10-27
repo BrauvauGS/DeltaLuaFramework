@@ -50,4 +50,63 @@ The `.luarc.json` configuration adds the `dop-api` directory to the language ser
 3. Make sure `.luarc.json` includes `./dop-api` in `workspace.library`.
 4. Start writing your Lua scripts and use autocompletion for the Delta API functions covered by the definitions.
 
-**Important:** The `dop.lua` file is intended exclusively for development tools. It does not implement Delta functions and must not be loaded or
+**Important:** The `dop.lua` file is intended exclusively for development tools. It does not implement Delta functions and must not be loaded or executed on the HMI.
+
+## Runtime Compatibility
+
+The framework is being developed and tested on a Delta DOP-100 HMI using Lua 5.3.
+
+Lua runtimes embedded in devices can differ from a standard Lua installation. Some standard Lua functions may be unavailable or behave differently.
+
+### Functions Tested Successfully
+
+The following functions were tested successfully on the target HMI:
+
+- `assert`
+- `type`
+- `pairs`
+- `ipairs`
+- `select`
+- `tonumber`
+- `tostring`
+- `error`
+- `rawget`
+- `rawset`
+- `rawequal`
+- `rawlen`
+- `setmetatable`
+- `getmetatable`
+
+The following libraries were also confirmed to be available as tables:
+
+- `math`
+- `string`
+- `table`
+- `coroutine`
+- `package`
+
+### Functions That Failed Testing
+
+The following standard Lua functions were tested but did not work in the tests performed on the target HMI:
+
+- `print`
+- `pcall`
+- `next`
+- `xpcall`
+- `load`
+- `dofile`
+- `loadfile`
+
+The `io`, `os`, and `debug` libraries were not detected as tables during testing. Their complete availability has not been verified.
+
+These results reflect tests performed on the target device and should not be interpreted as a complete specification of the Delta Lua runtime.
+
+## Goals
+
+The goal of DeltaLuaFramework is to make Lua development for Delta HMIs more structured and maintainable.
+
+The project provides reusable application modules and a better development experience in Visual Studio Code, while keeping compatibility with the Lua environment available on the target HMI as the priority.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
